@@ -19,7 +19,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "ID_PESSOA", referencedColumnName = "ID")
 public class Player extends Person {
     @ManyToMany(mappedBy = "players")
-    private List<BookAgenty> MybookAgents = new ArrayList<>();
+    private List<BookAgenty> bookAgents = new ArrayList<>();
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Aposta> apostas = new ArrayList<>();

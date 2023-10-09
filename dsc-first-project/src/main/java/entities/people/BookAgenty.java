@@ -7,6 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -21,29 +25,54 @@ import java.util.List;
 @DiscriminatorValue(value = "f")
 @PrimaryKeyJoinColumn(name = "ID_PESSOA", referencedColumnName = "ID")
 public class BookAgenty extends Person {
-    
-    @Enumerated(EnumType.STRING)
-    @Column(name = "FUNCIONARIO_ENUM_CARGO", nullable = false, updatable = true)
-    private CargoFuncionario cargoFuncionario;
-     
-    
-    private String username;
-    private String password;
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+   
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Admin admin;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ADMIN_BOOKAGETY", referencedColumnName= "bookAgents", nullable = true)
+    private Admin AdminBookAgent;
+    
+@ManyToMany(mappedBy = "MybookAgents", cascade = CascadeType.ALL)
+   @Column(name = "My_Players", nullable = false, length = 50, updatable = true)
+    private List<BookAgenty> MyPlayers = new ArrayList<>();
 
-    @ManyToMany (mappedBy = "bookAgenty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+   
+
+    public Admin getAdminBookAgent() {
+        return AdminBookAgent;
+    }
+
+    public void setAdminBookAgent(Admin AdminBookAgent) {
+        this.AdminBookAgent = AdminBookAgent;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public List<Aposta> getApostas() {
+        return apostas;
+    }
+
+    public void setApostas(List<Aposta> apostas) {
+        this.apostas = apostas;
+    }
+
+    @ManyToMany (mappedBy = "bookAgenty", cascade = CascadeType.ALL)
     private List<Player> players = new ArrayList<>();
 
-    @OneToMany(mappedBy = "bookAgenty", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bookAgenty", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Aposta> apostas = new ArrayList<>();
 
     // Métodos: adicionar Player, adicionar Aposta
 
-    void setAdmin(Admin aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+  
 
     
 }

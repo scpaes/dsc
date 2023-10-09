@@ -18,12 +18,11 @@ public class Admin extends Person {
     @Column(name = "ADMIN_PASSWORD", nullable = false, length = 50, updatable = true)
     private String password;
 
-   @OneToMany(mappedBy = "AdminBookAgent", cascade = CascadeType.ALL,  orphanRemoval = true)
-   @Column(name = "BOOKAGENTS", nullable = false, length = 50, updatable = true)
+   @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<BookAgenty> bookAgents = new ArrayList<>();
 
    public void adicionarNovoBookAgent(BookAgenty bookAgent) {
-        bookAgent.setAdminBookAgent(this);
+        bookAgent.setAdmin(this);
         bookAgents.add(bookAgent);
     }
     // Métodos: adicionar, remover BookAgent, realizar sorteio

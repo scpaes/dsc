@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "TB_CONTACT")
+@Table(name = "TB_FUNCIONARIO")
+@DiscriminatorValue(value = "f")
 @PrimaryKeyJoinColumn(name = "PERSON_CONTACT", referencedColumnName = "ID")
 public class Contato {
     @Id
